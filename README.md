@@ -1,48 +1,48 @@
 # FashionMart – E-Commerce Website (MERN Stack)
 
-## Yeh project kya hai?
+## What is this project?
 
-**FashionMart** ek **full-stack e-commerce website** hai jisme:
+**FashionMart** is a **full-stack e-commerce website** with:
 
-1. **Customer** – Frontend (React) pe products dekhta hai, cart bharta hai, order place karta hai.
-2. **Backend** – Node.js + Express API jo database (MongoDB) se data leta/rakhta hai, login/cart/orders handle karta hai.
-3. **Admin** – Alag React app jahan se products add/remove aur orders ka status manage hota hai.
+1. **Customer** – Frontend (React) to browse products, add to cart, and place orders.
+2. **Backend** – Node.js + Express API that reads/writes data in MongoDB and handles login, cart, and orders.
+3. **Admin** – Separate React app to add/remove products and manage order status.
 
-Sab cheezein **MERN** se bani hain: **M**ongoDB, **E**xpress, **R**eact, **N**ode.js.
+Everything is built with the **MERN** stack: **M**ongoDB, **E**xpress, **R**eact, **N**ode.js.
 
 ---
 
-## Project ka structure (folders)
+## Project structure
 
 ```
 fashionmart/
-├── frontend/    → Customer ke liye website (home, collection, cart, order, login, etc.)
-├── backend/     → API server (users, products, cart, orders – sab yahan se)
-└── admin/       → Admin panel (products add karo, orders dekho/update karo)
+├── frontend/    → Customer-facing site (home, collection, cart, order, login, etc.)
+├── backend/     → API server (users, products, cart, orders)
+└── admin/       → Admin panel (add/remove products, view and update orders)
 ```
 
-- **frontend** aur **admin** dono alag-alag React apps hain (Vite + React).
-- **backend** ek hi API hai; frontend aur admin dono isi API ko use karte hain.
+- **Frontend** and **admin** are separate React apps (Vite + React).
+- **Backend** is a single API used by both frontend and admin.
 
 ---
 
-## Pehle kya chahiye (Prerequisites)
+## Prerequisites
 
-- **Node.js** (v18 ya usse upar) – [nodejs.org](https://nodejs.org) se install karo.
-- **MongoDB** – Ya to apne computer pe install + run karo, ya **MongoDB Atlas** (cloud) ka free account use karo.
+- **Node.js** (v18 or higher) – install from [nodejs.org](https://nodejs.org).
+- **MongoDB** – Either install and run it locally, or use a free **MongoDB Atlas** (cloud) account.
 
 ---
 
-## Setup – step by step
+## Setup (step by step)
 
-### Step 1: Code clone karo aur dependencies install karo
+### Step 1: Clone the repo and install dependencies
 
 ```bash
 git clone https://github.com/GudiyaVerma16/fashionmart.git
 cd fashionmart
 ```
 
-Phir teeno folders me jaa kar `npm install` chalao:
+Then run `npm install` in each folder:
 
 ```bash
 cd frontend && npm install && cd ..
@@ -52,28 +52,28 @@ cd admin && npm install && cd ..
 
 ### Step 2: Environment variables (.env files)
 
-Har part ko apni **.env** file chahiye taaki sahi URL / password / keys use ho.
+Each part of the app needs its own **.env** file with the correct URLs, passwords, and keys.
 
 **1) Backend – `backend/.env`**  
-(Pehle se nahi hai to nayi file banao `backend` folder ke andar.)
+(Create this file inside the `backend` folder if it doesn’t exist.)
 
 ```env
 MONGODB_URI=mongodb://127.0.0.1:27017
 PORT=4000
-JWT_SECRET=apna-koi-bhi-long-random-secret-key
+JWT_SECRET=your-long-random-secret-key
 
-# Admin panel login (jo bhi email/password admin ke liye chaho)
+# Admin panel login (set your own email/password for admin)
 ADMIN_EMAIL=admin@forever.com
 ADMIN_PASSWORD=admin123
 
-# Optional – product images cloud pe rakhne ke liye (chhod do to local upload use hoga)
+# Optional – for storing product images in the cloud (leave empty to use local uploads)
 # CLOUDINARY_NAME=
 # CLOUDINARY_API_KEY=
 # CLOUDINARY_SECRET_KEY=
 ```
 
-- **MONGODB_URI**: Agar MongoDB apne PC pe chal raha hai to `mongodb://127.0.0.1:27017`. Atlas use kar rahe ho to unka connection string yahan daalo.
-- **JWT_SECRET**: Koi bhi strong random string (e.g. `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"` se generate kar sakte ho).
+- **MONGODB_URI**: Use `mongodb://127.0.0.1:27017` if MongoDB runs on your machine. For Atlas, paste your cluster connection string here.
+- **JWT_SECRET**: Any strong random string (e.g. generate with: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"`).
 
 **2) Frontend – `frontend/.env`**
 
@@ -87,101 +87,111 @@ VITE_BACKEND_URL=http://localhost:4000
 VITE_BACKEND_URL=http://localhost:4000
 ```
 
-Dono me ye batata hai ki API kahan chal rahi hai (localhost:4000 = backend).
+Both point to where the API runs (localhost:4000 = backend).
 
-### Step 3: MongoDB chalana
+### Step 3: Start MongoDB
 
 - **Local MongoDB**:  
   - Linux: `sudo systemctl start mongod`  
   - Mac: `brew services start mongodb-community`  
-- **Atlas**: Kuch nahi start karna, sirf connection string `backend/.env` me sahi daalna.
+- **Atlas**: No need to start anything; just set the connection string in `backend/.env`.
 
-### Step 4: Teen servers start karo (3 alag terminals)
+### Step 4: Start the three servers (use 3 separate terminals)
 
-Order matter karta hai: pehle **backend**, phir **frontend**, phir **admin**.
+Order matters: start **backend** first, then **frontend**, then **admin**.
 
 **Terminal 1 – Backend (API)**  
 ```bash
 cd backend
 npm run server
 ```
-- Ye **http://localhost:4000** pe chalega.  
-- Terminal me "Connected to MongoDB" dikhe to backend theek hai.
+- Runs at **http://localhost:4000**.  
+- When you see "Connected to MongoDB" in the terminal, the backend is ready.
 
 **Terminal 2 – Frontend (customer site)**  
 ```bash
 cd frontend
 npm run dev
 ```
-- Browser me **http://localhost:5173** kholo – yahi customer wali website hai.
+- Open **http://localhost:5173** in your browser – this is the customer store.
 
 **Terminal 3 – Admin panel**  
 ```bash
 cd admin
 npm run dev
 ```
-- Browser me **http://localhost:5174** (ya jo port Vite dikhaye) – yahan se admin login karke products/orders manage karte ho.
+- Open **http://localhost:5174** (or the port Vite shows) – use this to log in as admin and manage products/orders.
 
 ---
 
-## Kaunsi URL pe kya hai?
+## What runs on which URL?
 
-| URL | Kya hai |
-|-----|--------|
-| http://localhost:5173 | **Frontend** – customer store (shopping, cart, order) |
-| http://localhost:5174 | **Admin panel** – products add karo, orders dekho/update karo |
-| http://localhost:4000 | **Backend API** – direct browser me kam use hoga, frontend/admin isi ko call karte hain |
+| URL | Description |
+|-----|-------------|
+| http://localhost:5173 | **Frontend** – customer store (browse, cart, orders) |
+| http://localhost:5174 | **Admin panel** – add products, view and update orders |
+| http://localhost:4000 | **Backend API** – used by frontend and admin; rarely opened directly in the browser |
 
 ---
 
-## Admin login (default)
+## Default admin login
 
 - **Email:** `admin@forever.com`  
 - **Password:** `admin123`  
 
-Ye values `backend/.env` me **ADMIN_EMAIL** aur **ADMIN_PASSWORD** me change kar sakte ho.
+You can change these in `backend/.env` using **ADMIN_EMAIL** and **ADMIN_PASSWORD**.
 
 ---
 
 ## Product images – Cloudinary (optional)
 
-- **.env me Cloudinary na daalo** to product ki images **local** save hoti hain (`backend/uploads/`) aur site phir bhi chalegi.
-- **Cloud pe rakhna ho** to:
-  1. [cloudinary.com](https://cloudinary.com) pe account banao.
-  2. Dashboard se **Cloud name**, **API Key**, **API Secret** copy karo.
-  3. `backend/.env` me add karo:  
+- If you **don’t set Cloudinary** in `.env`, product images are stored **locally** in `backend/uploads/` and the site still works.
+- To **use the cloud**:
+  1. Create an account at [cloudinary.com](https://cloudinary.com).
+  2. From the dashboard, copy **Cloud name**, **API Key**, and **API Secret**.
+  3. Add them to `backend/.env`:  
      `CLOUDINARY_NAME=...`, `CLOUDINARY_API_KEY=...`, `CLOUDINARY_SECRET_KEY=...`  
-  4. Backend restart karo.
+  4. Restart the backend.
 
 ---
 
-## Technologies (kya use hua hai)
+## Technologies used
 
 | Part | Tech |
 |------|------|
 | Frontend & Admin | React, React Router, Axios, Tailwind CSS, Vite |
 | Backend | Node.js, Express, MongoDB (Mongoose), JWT, bcrypt, Multer |
-| Images | Cloudinary (optional) ya local uploads |
-| Payment | COD by default; Stripe/Razorpay code maujood hai, extend kar sakte ho |
+| Images | Cloudinary (optional) or local uploads |
+| Payment | COD by default; Stripe/Razorpay code is present and can be extended |
 
 ---
 
-## API (short overview)
+## API overview
 
-Backend ye routes provide karta hai:
+The backend exposes these main routes:
 
 - **User:** register, login  
 - **Admin:** admin login  
 - **Products:** list, add (admin), remove (admin)  
 - **Cart:** add, update, get (login required)  
-- **Orders:** place (user), list (admin), status update (admin)  
+- **Orders:** place (user), list (admin), update status (admin)  
 
-Detail ke liye `backend/routes/` me dekh sakte ho.
+See `backend/routes/` for full details.
 
 ---
 
-## Deploy karna ho to
+## Deployment
 
-- **Frontend & Admin:** `npm run build` → `dist` folder deploy karo (e.g. Vercel, Netlify).  
-- **Backend:** Koi bhi Node host (e.g. Render, Railway); wahan MongoDB (Atlas) aur env variables set karo.  
-- Deploy ke baad frontend aur admin ki `.env` me **VITE_BACKEND_URL** apne live backend URL se replace karke phir build lena.
+- **Frontend & Admin:** Run `npm run build`, then deploy the `dist` folder (e.g. Vercel, Netlify).  
+- **Backend:** Deploy to any Node host (e.g. Render, Railway); set MongoDB (e.g. Atlas) and env variables there.  
+- After deployment, set **VITE_BACKEND_URL** in frontend and admin `.env` to your live backend URL, then build again.
+
+---
+
+## Contributors
+
+- **Divanshi Jain** – [GitHub](https://github.com/DivanshiJain2005)
+
+## License
+
+MIT License.
