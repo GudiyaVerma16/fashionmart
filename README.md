@@ -4,9 +4,9 @@
 
 **FashionMart** is a **full-stack e-commerce website** with:
 
-1. **Customer** – Frontend (React) to browse products, add to cart, and place orders.
-2. **Backend** – Node.js + Express API that reads/writes data in MongoDB and handles login, cart, and orders.
-3. **Admin** – Separate React app to add/remove products and manage order status.
+1. **Customer** – Frontend (React) to browse products, add to cart, and place orders. (https://fashionmart-frontend.onrender.com/)
+2. **Backend** – Node.js + Express API that reads/writes data in MongoDB and handles login, cart, and orders.(https://fashionmart-93as.onrender.com/)
+3. **Admin** – Separate React app to add/remove products and manage order status.(https://admin-g8np.onrender.com/)
 
 Everything is built with the **MERN** stack: **M**ongoDB, **E**xpress, **R**eact, **N**ode.js.
 
